@@ -10,6 +10,8 @@ export const QrCodeGenerator = () => {
     const [result, setResult] = useState('');
 
     const onClickHandler = () => {
+        if (value.trim() === '') return;
+
         const prevData = JSON.parse(localStorage.getItem(GENERATE_DATA) || '[]');
 
         localStorage.setItem(
@@ -28,22 +30,31 @@ export const QrCodeGenerator = () => {
 
     return (
         <div className={s.container}>
-            <input
-                type="text"
-                value={value}
-                placeholder="Введите текст..."
-                onChange={onChangeHandler}
-                className={s.input}
-            />
-            <button type="button" className={s.button} onClick={onClickHandler}>
-                Generate QR Code
-            </button>
+            <div className={s.box}>
+                <h1 className={s.title}>Generate QR Code</h1>
 
-            {result !== '' && (
-                <div className={s.qrWrapper}>
-                    <QRCodeSVG value={result} size={200} />
-                </div> 
-            )}
+                <input
+                    type="text"
+                    value={value}
+                    placeholder="Enter text"
+                    onChange={onChangeHandler}
+                    className={s.input}
+                />
+
+                <button
+                    type="button"
+                    className={s.button}
+                    onClick={onClickHandler}
+                >
+                    Generate
+                </button>
+
+                {result !== '' && (
+                    <div className={s.result}>
+                        <QRCodeSVG value={result} size={180} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
